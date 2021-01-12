@@ -10,22 +10,30 @@ class TestGS(unittest.TestCase):
 	def __init__(self):
 		self.A = ["Chris", "Twisted Fate", "Ori"]
 		self.E = ["CompA", "CompB", "CompC"]
-	def test_matches_init(self):
-		return PASSED
 
+		'''
+		input interpretation:
+		*prefA[0][0] is Chris's preference value of CompA
+		*If prefA[0][0] = 1, than Chris prefers CompA to all other companies.
+		'''
+
+		#let's create our input arrays
+		self.prefA = [[3, 1, 2],[2, 3, 1],[3, 2, 1]]
+		self.prefB = [[2, 3, 1],[3, 2, 1],[1, 2, 3]]
+
+	def test_matches_init(self):
 		"""
 		Test the accuracy in the initlization of the
 		hash matches. 
 		"""
-		#data is the target hash
-		data = {"Chris": 0, "Twisted Fate": 0, "Ori": 0, "CompA": 0, 
-				"CompB": 0, "CompC": 0}
-
-		#algorithm arguments
-		A = ["Chris", "Twisted Fate", "Ori"]
-		E = ["CompA", "CompB", "CompC"]
-		result = gs(A, E)	
+		result = gs(self.prefA, self.prefB)
 		self.assertEqual(result, data)
+
+
+
+
 
 if __name__ == '__main__':
 	unittest.main()
+
+
