@@ -2,36 +2,48 @@ import unittest
 
 from gale_shapley import GS as gs
 
-#constant to note any initialization tests
-#that were passed. 
-PASSED = 1
 
 class TestGS(unittest.TestCase):
-	def __init__(self):
-		self.A = ["Chris", "Twisted Fate", "Ori"]
-		self.E = ["CompA", "CompB", "CompC"]
-
-		'''
-		input interpretation:
-		*prefA[0][0] is Chris's preference value of CompA
-		*If prefA[0][0] = 1, than Chris prefers CompA to all other companies.
-		'''
-
+	def test_matches_intuitive(self):
+		"""
+		Test the accuracy of the algorithm with
+		an intuitive preference list.
+		"""
 		#let's create our input arrays
-		self.prefA = [[3, 1, 2],[2, 3, 1],[3, 2, 1]]
-		self.prefB = [[2, 3, 1],[3, 2, 1],[1, 2, 3]]
+		prefA = [[3, 1, 2],[2, 3, 1],[3, 2, 1]]
+		prefB = [[2, 3, 1],[3, 2, 1],[1, 2, 3]]
 
-	def test_matches_init(self):
+		#Since prefA[0] and prefB[2] prefer each other, 
+		#they will match. Since prefA[1] prefers prefB[1], 
+		#they will initially match, however, since 
+		#prefA[2] prefers prefB[1] and, more importantly, 
+		#prefB[1] prefers prefA[2] over prefA[1], there will
+		#be an unmatching between the second matched pair. 
+
+		#expected result
+		expected_result = ([2, 0, 1], [1, 2, 0])
+
+		result = gs(prefA, prefB)
+		self.assertEqual(result, expected_result)
+
+
+	def test_complex_matches(self):
 		"""
-		Test the accuracy in the initlization of the
-		hash matches. 
+		Test the accuracy of the algorithm with 
+		a more involved preference list.
 		"""
-		result = gs(self.prefA, self.prefB)
-		self.assertEqual(result, data)
+		prefA = [[1,6,4,3,2,5,7], [4,3,7,1,6,5,2], 
+				[1,6,4,2,3,5,7], [7,3,6,2,4,1,5], 
+				[1,6,7,2,3,5,4], [4,7,6,1,5,3,2], [1,5,4,3,6,7,2]]
+		prefB = [[3,7,4,2,1,5,6],[4,2,7,5,1,3,6],
+				[7,2,3,4,1,6,5], [4,6,2,3,1,7,5],
+				[6,7,5,2,4,3,1], [5,4,1,7,3,2,6], [7,6,3,4,5,1,2]]
 
+		#expected result
+		expected_result = ([2, 3, 1, 7, 6, 4, 5], [3, 1, 2, 6, 7, 5, 4])
 
-
-
+		result = gs(prefA, prefB)
+		self.assertEqual(result, expected_result)
 
 if __name__ == '__main__':
 	unittest.main()

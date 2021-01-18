@@ -14,8 +14,6 @@ def GS(A, E):
 	matches_A, matches_B = [-1]*N, [-1]*N 	#list of matches; -1 => free
 	num_free = N 			#number of unmatched applicants
 
-	iter_a = 1000
-
 	#while there is an unmatched applicant
 	while num_free:
 		curr_applicant = -1
@@ -27,15 +25,6 @@ def GS(A, E):
 
 		#find the employer with the highest preference for curr_applicant
 		best_employer = find_best_employer(A[curr_applicant])
-
-		if not iter_a:
-			print(best_employer)
-			print(curr_applicant)
-			print(matches_A)
-			print(matches_B)
-			input()
-		else:
-			iter_a -= 1
 
 		if matches_B[best_employer] == -1:
 			#if that employer is free, create a new match
@@ -82,11 +71,14 @@ def match(curr_applicant, employer, matches_A, matches_B):
 	matches_A[curr_applicant] = employer
 	matches_B[employer] = curr_applicant
 
+# prefA = [[1,6,4,3,2,5,7], [4,3,7,1,6,5,2], 
+# 		[1,6,4,2,3,5,7], [7,3,6,2,4,1,5], 
+# 		[1,6,7,2,3,5,4], [4,7,6,1,5,3,2], [1,5,4,3,6,7,2]]
+# prefB = [[3,7,4,2,1,5,6],[4,2,7,5,1,3,6],
+# 		[7,2,3,4,1,6,5], [4,6,2,3,1,7,5],
+# 		[6,7,5,2,4,3,1], [5,4,1,7,3,2,6], [7,6,3,4,5,1,2]]
 
-prefA = [[3, 1, 2],[2, 3, 1],[3, 2, 1]]
-prefB = [[2, 3, 1],[3, 2, 1],[1, 2, 3]]
-
-print(GS(prefA, prefB))
+# print(GS(prefA, prefB))
 
 #*1*
 #Since we only select an employer in find_best_employer
